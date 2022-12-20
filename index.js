@@ -3,32 +3,27 @@ const app = express()
 const http = require("http")
 const { Server } = require("socket.io")
 const cors = require("cors")
+const bodyParser = require("body-parser")
+const connect = require('./db')
+const sockets = require('./socket')
 require('dotenv').config()
 
-app.use(cors());
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+connect()
 
 const server = http.createServer(app)
 
 const io = new Server(server, {
-    cors: {
-      origin: "https://ecom-app-phi.vercel.app",
-      // origin: "http://localhost:3000",
-      methods: ["GET", "POST"],
-    },
+  cors:{
+    // origin: "https://ecom-app-phi.vercel.app"
+    origin: "http://localhost:3000"
+  }
 })
 
-io.on("connection", (socket) => {
-  socket.on("join_room", (data) => {
-    socket.join(data)
-  })
-  socket.on('typing', (data)=>{
-    io.emit('display', data)
-  })
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data)
-  })
-})
-
+sockets(io)
 
 server.listen(process.env.PORT, () => {
     console.log("WEBSOCKET SERVER IS RUNNING")
