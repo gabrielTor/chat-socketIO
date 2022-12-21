@@ -1,4 +1,4 @@
-const {getMessages, sendMessages} = require('./controller')
+const {sendMessages} = require('./controller')
 
 async function sockets(io){
     io.on("connection", (socket) => {

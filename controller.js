@@ -15,4 +15,4 @@ const sendMessages = async(message, id) => {
     }
 }
 
-module.exports = {getMessages, sendMessages}
+module.exports = {sendMessages}
