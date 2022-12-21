@@ -1,14 +1,5 @@
 const Chat = require('./Models/Chat')
 
-const getMessages = async(id) => {
-    try {
-        const chat = await Chat.findById(id)
-        return chat?.messages
-    } catch (error) {
-        console.error(error)
-    }
-}
-
 const sendMessages = async(message, id) => {
     try {
         const chat = await Chat.findById(id)
