@@ -9,7 +9,7 @@ const sockets = require('./socket')
 require('dotenv').config()
 
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 connect()
@@ -18,8 +18,8 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors:{
-    // origin: "https://ecom-app-phi.vercel.app"
-    origin: "http://localhost:3000"
+    origin: "https://ecom-app-phi.vercel.app"
+    // origin: "http://localhost:3000"
   }
 })
 

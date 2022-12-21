@@ -1,22 +1,27 @@
 const Chat = require('./Models/Chat')
 
-const newChat = async(chat) => {
+const getMessages = async(id) => {
     try {
-        const createChat = await Chat.create(chat)
-        return createChat
+        const chat = await Chat.findById(id)
+        return chat?.messages
     } catch (error) {
         console.error(error)
     }
 }
 
-const joinChat = async(chat) => {
-    const {userId, sellerUserId, productId} = chat
+const sendMessages = async(message, id) => {
     try {
-        const room = await Chat.find({userId, sellerUserId, productId})
-        return room.length ? room[0] : await newChat(chat) 
+        const chat = await Chat.findById(id)
+        chat.messages = [
+            ...chat?.messages, {
+                text: message.text,
+                currentUser: message.currentUser,
+            }
+        ]
+        await chat.save()
     } catch (error) {
         console.error(error)
     }
 }
 
-module.exports = {joinChat}
+module.exports = {getMessages, sendMessages}
