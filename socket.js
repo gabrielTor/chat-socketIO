@@ -4,7 +4,7 @@ async function sockets(io){
     io.on("connection", (socket) => {
 
         socket.on("join_room", async(data) => {
-            socket.join(data)
+            if(data) socket.join(data)
         })
 
         socket.on('typing', (data) => {
