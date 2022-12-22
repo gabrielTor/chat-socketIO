@@ -8,7 +8,7 @@ async function sockets(io){
         })
 
         socket.on('typing', (data) => {
-            io.to(data.room).emit('display', data)
+            socket.to(data.room).emit('display', data)
         })
 
         socket.on("send_message", async(data) => {
